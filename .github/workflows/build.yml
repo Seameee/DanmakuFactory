@@ -24,14 +24,17 @@ jobs:
     - name: Get current date and time
       id: vars
       run: |
-        echo "RELEASE_VERSION=v$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
-        echo "RELEASE_NAME=DanmakuFactory $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+        # 使用 PowerShell 获取日期和时间
+        $date = Get-Date -Format "yyyyMMddHHmm"
+        $name = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+        echo "RELEASE_VERSION=v$date" >> $GITHUB_ENV
+        echo "RELEASE_NAME=DanmakuFactory $name" >> $GITHUB_ENV
 
     - name: Print Release Info
       run: |
         echo "Release Version: ${{ env.RELEASE_VERSION }}"
         echo "Release Name: ${{ env.RELEASE_NAME }}"
-      
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
