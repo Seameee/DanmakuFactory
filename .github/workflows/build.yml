@@ -19,10 +19,16 @@ jobs:
 
     - name: Build
       run: |
-        make -f makefile-win  # 直接在根目录下运行 Makefile
+        mingw32-make -f makefile-win  # 使用 mingw32-make 编译项目
 
     - name: Upload executable
       uses: actions/upload-artifact@v3  # 使用 v3 版本
       with:
         name: DanmakuFactory.exe
         path: DanmakuFactory.exe  # 根据实际输出文件路径调整
+        
+    - name: List files
+      run: dir  # 在 Windows 上列出当前目录的文件
+
+    - name: Check MinGW version
+      run: gcc --version  # 检查 GCC 版本和位数
