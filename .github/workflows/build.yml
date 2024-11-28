@@ -3,10 +3,10 @@ name: Build DanmakuFactory
 on:
   push:
     branches:
-      - master  # 修改为 master 分支
+      - master  # 推送到 master 分支时触发
   pull_request:
     branches:
-      - master  # 修改为 master 分支
+      - master  # 针对 master 分支的拉取请求时触发
   workflow_dispatch:  # 允许手动触发工作流
 
 jobs:
@@ -17,20 +17,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2  # 检出代码
 
-    - name: Set up MinGW
-      run: |
-        choco install mingw
-        # 手动设置 PATH 环境变量
-        echo "##[add-path]C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw32\\bin"
-        echo "##[add-path]C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin"
-
     - name: Build
       run: |
         cd C:\Users\runneradmin\work\DanmakuFactory\DanmakuFactory  # 根据实际路径调整
         make -f makefile-win  # 使用 Makefile 进行编译
 
     - name: Upload executable
-      uses: actions/upload-artifact@v3  # 更新为 v3
+      uses: actions/upload-artifact@v3  # 使用 v3 版本
       with:
         name: DanmakuFactory.exe
         path: DanmakuFactory.exe  # 根据实际输出文件路径调整
