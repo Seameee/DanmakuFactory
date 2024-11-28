@@ -21,35 +21,8 @@ jobs:
       run: |
         mingw32-make -f makefile-win
 
-    - name: Get current date and time
-      id: vars
-      run: |
-        # 使用 PowerShell 获取日期和时间
-        $date = Get-Date -Format "yyyyMMddHHmm"
-        $name = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-        echo "RELEASE_VERSION=v$date" >> $GITHUB_ENV
-        echo "RELEASE_NAME=DanmakuFactory $name" >> $GITHUB_ENV
-
-    - name: Print Release Info
-      run: |
-        echo "Release Version: ${{ env.RELEASE_VERSION }}"
-        echo "Release Name: ${{ env.RELEASE_NAME }}"
-
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      with:
-        tag_name: ${{ env.RELEASE_VERSION }}  # 使用构建时间作为版本号
-        release_name: ${{ env.RELEASE_NAME }}  # 使用构建时间作为 Release 名称
-        draft: false
-        prerelease: false  # 如果您希望这是一个正式的发布，可以将此设置为 false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Upload executable
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-artifact@v4
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: DanmakuFactory.exe
-        asset_name: DanmakuFactory.exe
-        asset_content_type: application/octet-stream
+        name: DanmakuFactory.exe
+        path: DanmakuFactory.exe
