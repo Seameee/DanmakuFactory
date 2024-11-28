@@ -19,7 +19,7 @@ jobs:
 
     - name: Build
       run: |
-        cd C:\Users\runneradmin\work\DanmakuFactory\DanmakuFactory  # 根据实际路径调整
+        cd DanmakuFactory  # 直接进入项目目录
         make -f makefile-win  # 使用 Makefile 进行编译
 
     - name: Upload executable
