@@ -28,7 +28,7 @@ jobs:
         make -f makefile-win  # 使用 Makefile 进行编译
 
     - name: Upload executable
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: DanmakuFactory.exe
         path: DanmakuFactory.exe
