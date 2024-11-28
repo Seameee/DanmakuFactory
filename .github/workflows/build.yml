@@ -17,6 +17,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2  # 检出代码
 
+    - name: Install 32-bit MinGW
+      run: |
+        choco install mingw --params="'/InstallDir:C:\mingw32 /Version:32'"
+        echo "C:\mingw32\bin" >> $GITHUB_PATH  # 添加 32 位 MinGW 到 PATH
+
     - name: Build
       run: |
         mingw32-make -f makefile-win  # 使用 mingw32-make 编译项目
@@ -26,9 +31,3 @@ jobs:
       with:
         name: DanmakuFactory.exe
         path: DanmakuFactory.exe  # 根据实际输出文件路径调整
-        
-    - name: List files
-      run: dir  # 在 Windows 上列出当前目录的文件
-
-    - name: Check MinGW version
-      run: gcc --version  # 检查 GCC 版本和位数
