@@ -40,10 +40,9 @@ jobs:
           exit 1
 
       - name: Trigger Build Workflow
-        if: success()
+        if: success()  # 仅在成功时触发
         uses: octokit/request-action@v2.0.0
         with:
           route: POST /repos/${{ github.repository }}/dispatches
-          mediaType: '{"accept": "application/vnd.github.v3+json"}'
           data: '{"event_type": "trigger-build"}'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # 需要 GitHub Token
