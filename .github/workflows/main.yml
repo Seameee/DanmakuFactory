@@ -28,7 +28,6 @@ jobs:
           upstream_sync_branch: master
           target_sync_branch: master
           target_repo_token: ${{ secrets.GITHUB_TOKEN }}  # 自动生成的token
-
           test_mode: false
 
       - name: Sync check
@@ -38,12 +37,13 @@ jobs:
           echo "[Error] Due to a change in the workflow file of the upstream repository, GitHub has automatically suspended the scheduled automatic update. You need to manually sync your fork. Please refer to the project README.md for instructions."
           exit 1
 
+      # 触发构建工作流
       - name: Trigger Build Workflow
-        if: success()
-        uses: octokit/request-action@v2.4.0
+        if: success()  # 仅在成功时触发
+        uses: octokit/request-action@v2.4.0  # 使用 octokit/request-action
         with:
           route: POST /repos/${{ github.repository }}/dispatches
-          route_data: '{"event_type": "trigger-build"}'
+          mediaType: '{"accept": "application/vnd.github.v3+json"}'
+          event_type: "trigger-build"  # 直接传递 event_type
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 设置 GITHUB_TOKEN
