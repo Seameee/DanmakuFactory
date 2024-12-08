@@ -43,7 +43,7 @@ jobs:
         uses: octokit/request-action@v2.4.0  # 使用 octokit/request-action
         with:
           route: POST /repos/${{ github.repository }}/dispatches
-          mediaType: '{"accept": "application/vnd.github.v3+json"}'
-          event_type: "trigger-build"  # 直接传递 event_type
+          mediaType: '{"accept": "application/vnd.github.v3+json"}'  # 设置媒体类型
+          # 将 event_type 直接添加到 route 中
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 设置 GITHUB_TOKEN
