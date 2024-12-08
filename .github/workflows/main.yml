@@ -27,7 +27,7 @@ jobs:
           upstream_sync_repo: hihkm/DanmakuFactory
           upstream_sync_branch: master
           target_sync_branch: master
-          target_repo_token: ${{ secrets.GITHUB_TOKEN }}  # 自动生成的token
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
           test_mode: false
 
       - name: Sync check
@@ -39,11 +39,11 @@ jobs:
 
       # 触发构建工作流
       - name: Trigger Build Workflow
-        if: success()  # 仅在成功时触发
-        uses: octokit/request-action@v2.4.0  # 使用 octokit/request-action
+        if: success()
+        uses: octokit/request-action@v2.4.0
         with:
           route: POST /repos/${{ github.repository }}/dispatches
-          mediaType: '{"accept": "application/vnd.github.v3+json"}'  # 设置媒体类型
-          # 将 event_type 直接添加到 route 中
+          mediaType: '{"accept": "application/vnd.github.v3+json"}'
+          event_type: "trigger-build"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 设置 GITHUB_TOKEN
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
